@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Espelho Emocional — Cícero Junqueira</title>
+<meta name="description" content="Um processo de sentir, perceber e trazer luz para a relação com a sua mãe. Gratuito. Sem julgamento."/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --verde:#13271B;--verde-700:#1B3A2D;--verde-500:#2F5240;
+  --dourado:#D4A017;--dourado-suave:#CDC484;
+  --palha:#F2EFE3;--marfim:#FAFAF6;--preto:#010101;
+  --fg2:#41513F;--fg3:#7A8478;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Jost',system-ui,sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--palha);color:var(--verde);overflow-x:hidden;min-height:100vh}
+
+/* TELA 1 — CAPTURA */
+#tela-captura{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:60px 24px;background:var(--verde)}
+.captura-inner{max-width:540px;width:100%;text-align:center}
+
+/* Logo no topo */
+.logo-captura{height:88px;object-fit:contain;margin:0 auto 40px;display:block;opacity:0.95}
+
+/* Divisor ornamental */
+.cap-ornamento{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:32px}
+.cap-ornamento span{width:44px;height:1px;background:var(--dourado);opacity:0.4;display:block}
+.cap-ornamento i{width:5px;height:5px;border-radius:50%;background:var(--dourado);display:block}
+
+/* Foto do Cícero */
+.foto-cicero{width:88px;height:88px;border-radius:50%;object-fit:cover;object-position:top;border:2px solid var(--dourado);margin:0 auto 20px;display:block;opacity:0.95}
+.cicero-credencial{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(212,160,23,0.65);margin-bottom:36px;display:block}
+
+/* Headline */
+.captura-inner h1{font-family:var(--serif);font-size:clamp(28px,5.5vw,52px);color:var(--palha);line-height:1.15;margin-bottom:16px;font-weight:300}
+.captura-inner h1 em{font-style:italic;color:var(--dourado)}
+
+/* Divisor fino */
+.cap-linha{width:1px;height:36px;background:linear-gradient(to bottom,transparent,rgba(212,160,23,0.5),transparent);margin:0 auto 28px}
+
+/* Descrição */
+.desc-destaque{font-family:var(--serif);font-style:italic;font-size:clamp(17px,2.2vw,21px);color:rgba(242,239,227,0.72);line-height:1.75;margin-bottom:0}
+
+/* Botão */
+.btn-dourado{background:var(--dourado);color:var(--verde);font-family:var(--sans);font-weight:600;font-size:14px;letter-spacing:2px;text-transform:uppercase;padding:17px 40px;border:none;border-radius:3px;cursor:pointer;transition:all 0.25s}
+.btn-dourado:hover{background:#e8b82a;transform:translateY(-1px)}
+.micro{font-size:12px;color:rgba(242,239,227,0.32);margin-top:14px}
+.tempo-estimado{font-size:13px;color:rgba(242,239,227,0.42);letter-spacing:.02em;margin-bottom:0}
+
+/* TELA 2 — PERGUNTAS */
+#tela-perguntas{display:none;min-height:100vh;padding:60px 24px;background:var(--verde)}
+.perguntas-inner{max-width:620px;margin:0 auto}
+.progresso-wrap{margin-bottom:44px}
+.progresso-label{display:flex;justify-content:space-between;font-size:12px;color:rgba(242,239,227,.5);letter-spacing:.05em;margin-bottom:10px;text-transform:uppercase}
+.progresso-bar{height:2px;background:rgba(242,239,227,.15);border-radius:2px;overflow:hidden}
+.progresso-fill{height:100%;background:var(--dourado);border-radius:2px;transition:width 0.4s ease}
+
+.pergunta-card{display:none;text-align:center;animation:fadeIn 0.4s ease}
+.pergunta-card.card-creme{background:transparent}
+.pergunta-card.card-creme .pergunta-texto{color:var(--verde)}
+.pergunta-card.card-creme .num-pergunta{color:var(--dourado)}
+.pergunta-card.card-creme .resposta-aberta{background:rgba(19,39,27,.06);border-color:rgba(19,39,27,.2);color:var(--verde)}
+.pergunta-card.card-creme .resposta-aberta::placeholder{color:var(--fg3)}
+.pergunta-card.card-creme .btn-nav{border-color:#d4cfc0;color:var(--fg3)}
+.pergunta-card.ativa{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.num-pergunta{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--dourado);margin-bottom:20px}
+.pergunta-texto{font-family:var(--serif);font-size:clamp(24px,3.5vw,36px);color:var(--palha);line-height:1.35;margin-bottom:36px;font-weight:400}
+.pergunta-sub{font-size:14px;color:var(--fg3);line-height:1.7;margin-bottom:36px;font-style:italic}
+
+.opcoes{display:flex;flex-direction:column;gap:10px;max-width:500px;margin:0 auto 32px}
+.opcao{background:var(--palha);border:1px solid #d4cfc0;color:var(--fg2);font-family:var(--sans);font-size:14px;padding:15px 20px;border-radius:3px;cursor:pointer;text-align:left;transition:all 0.2s;line-height:1.5}
+.opcao:hover{border-color:var(--dourado);color:var(--verde);background:#ece8da}
+.opcao.selecionada{border-color:var(--dourado);background:var(--verde);color:var(--palha)}
+
+.nav-perguntas{display:flex;justify-content:center;gap:14px;margin-top:8px}
+.btn-nav{background:transparent;border:1px solid rgba(242,239,227,.3);color:rgba(242,239,227,.6);font-family:var(--sans);font-size:14px;padding:12px 26px;border-radius:3px;cursor:pointer;transition:all 0.2s}
+.btn-nav:hover{border-color:var(--palha);color:var(--palha)}
+.btn-avancar{background:var(--verde);border:none;color:var(--palha);font-family:var(--sans);font-weight:600;font-size:14px;letter-spacing:.03em;padding:14px 36px;border-radius:3px;cursor:pointer;transition:all 0.2s;opacity:0.3;pointer-events:none}
+.btn-avancar.ativo{opacity:1;pointer-events:auto}
+.btn-avancar.ativo:hover{background:var(--verde-500);transform:translateY(-1px)}
+
+/* TELA 3 — RESULTADO */
+#tela-resultado{display:none;min-height:100vh;padding:60px 24px;background:var(--palha)}
+.resultado-inner{max-width:620px;margin:0 auto;text-align:center}
+.foto-resultado{width:80px;height:80px;border-radius:50%;object-fit:cover;object-position:top;border:2px solid var(--dourado);margin:0 auto 28px;display:block}
+.resultado-inner h2{font-family:var(--serif);font-size:clamp(28px,4vw,44px);color:var(--verde);margin-bottom:20px;line-height:1.2;font-weight:400}
+.resultado-inner h2 em{font-style:italic;color:var(--dourado)}
+.resultado-inner .reflexao{font-family:var(--serif);font-style:italic;font-size:clamp(18px,2.2vw,23px);color:var(--fg2);line-height:1.75;margin-bottom:28px}
+.resultado-inner .convite{font-size:15px;color:var(--fg3);line-height:1.85;margin-bottom:40px;max-width:500px;margin-left:auto;margin-right:auto}
+.divisor{width:40px;height:1px;background:var(--dourado);margin:0 auto 36px}
+
+.card-diagnostico{background:var(--verde);border-radius:4px;padding:36px;max-width:480px;margin:0 auto 36px;text-align:left}
+.card-diagnostico h3{font-family:var(--serif);color:var(--dourado);font-size:21px;margin-bottom:20px;text-align:center;font-weight:400;font-style:italic}
+.card-item{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
+.card-item:last-of-type{margin-bottom:0}
+.check{color:var(--dourado);flex-shrink:0;margin-top:2px}
+.card-item p{font-size:14px;color:rgba(242,239,227,.8);line-height:1.65}
+.preco-box{margin-top:24px;padding-top:20px;border-top:1px solid rgba(212,160,23,.2);text-align:center}
+.preco-box .por{font-size:32px;font-weight:600;color:var(--dourado);margin-bottom:4px;font-family:var(--serif)}
+.preco-box .desc-preco{font-size:12px;color:rgba(242,239,227,.5);letter-spacing:.05em;text-transform:uppercase}
+
+.btn-diagnostico{display:block;width:100%;max-width:380px;margin:0 auto 12px;background:var(--dourado);color:var(--verde);font-family:var(--sans);font-weight:600;font-size:15px;letter-spacing:.03em;padding:20px 32px;border:none;border-radius:3px;cursor:pointer;text-decoration:none;text-align:center;transition:all 0.25s}
+.btn-diagnostico:hover{opacity:0.9;transform:translateY(-2px);box-shadow:0 6px 24px rgba(212,160,23,.3)}
+.sem-pressao{font-size:12px;color:var(--fg3);text-align:center;margin-top:10px}
+.btn-diagnostico-sec{display:block;width:100%;max-width:380px;margin:0 auto 12px;background:transparent;color:var(--fg2);font-family:var(--sans);font-size:14px;letter-spacing:.02em;padding:14px 32px;border:1px solid #d4cfc0;border-radius:3px;cursor:pointer;text-decoration:none;text-align:center;transition:all 0.25s}
+.btn-diagnostico-sec:hover{border-color:var(--dourado);color:var(--verde)}
+
+/* FOTO DA PERGUNTA */
+.foto-pergunta{width:100%;max-width:500px;height:240px;object-fit:cover;border-radius:4px;margin:0 auto 28px;display:block;opacity:0.92}
+
+/* TEXTAREA ABERTA */
+.resposta-aberta{width:100%;max-width:500px;min-height:110px;background:rgba(242,239,227,.08);border:1px solid rgba(242,239,227,.25);border-radius:3px;font-family:var(--serif);font-size:17px;color:var(--palha);padding:16px 18px;resize:none;outline:none;line-height:1.7;transition:border 0.2s;display:block;margin:0 auto}
+.resposta-aberta:focus{border-color:var(--dourado)}
+.resposta-aberta::placeholder{color:rgba(242,239,227,.35);font-style:italic}
+
+/* ÁUDIO */
+.audio-wrap{max-width:500px;margin:16px auto 0;display:inline-flex;align-items:center;gap:8px}
+.audio-hint{font-size:13px;color:rgba(242,239,227,.45);font-style:italic;flex:1;text-align:left;margin:0}
+.btn-audio{display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:40px;height:40px;background:transparent;border:1px solid rgba(242,239,227,.3);color:rgba(242,239,227,.6);border-radius:50%;cursor:pointer;transition:all .2s;padding:0}
+.btn-audio:hover{border-color:var(--dourado);color:var(--palha)}
+.btn-audio.gravando{border-color:#e74c3c;color:#e74c3c;animation:pulsar 1s infinite}
+@keyframes pulsar{0%,100%{opacity:1}50%{opacity:.5}}
+.btn-audio svg{width:18px;height:18px;flex-shrink:0}
+.pergunta-card.card-creme .audio-hint{color:var(--fg3)}
+.pergunta-card.card-creme .btn-audio{border-color:#d4cfc0;color:var(--fg2)}
+.pergunta-card.card-creme .btn-audio:hover{border-color:var(--dourado);color:var(--verde)}
+
+/* FOOTER CORAÇÃO */
+.footer-coracao{padding:48px 24px 36px;display:flex;justify-content:center;background:var(--palha)}
+.footer-coracao img{height:80px;object-fit:contain}
+
+/* MOBILE */
+@media(max-width:480px){
+  .resposta-aberta{font-size:16px}
+  .card-diagnostico{padding:24px 20px}
+  .logo-captura{height:68px}
+  .foto-cicero{width:72px;height:72px}
+  #tela-captura{padding:48px 20px}
+}
+</style>
+</head>
+<body>
+
+
+<!-- TELA 1: CAPTURA -->
+<section id="tela-captura">
+  <div class="captura-inner">
+
+    <!-- Logo -->
+    <img src="assets/logo-lockup.png" alt="Cícero Junqueira" class="logo-captura"/>
+
+    <!-- Ornamento -->
+    <div class="cap-ornamento">
+      <span></span><i></i><span></span>
+    </div>
+
+    <!-- Foto + credencial -->
+    <img src="assets/photos/cicero-jardim.png" alt="Cícero Junqueira" class="foto-cicero"/>
+    <span class="cicero-credencial">Cícero Junqueira · Constelações Sistêmicas desde 2018</span>
+
+    <!-- Headline -->
+    <h1>A vida te trata, como você,<br><em>trata a sua mãe.</em></h1>
+
+    <!-- Linha divisória -->
+    <div class="cap-linha"></div>
+
+    <!-- Descrição -->
+    <p class="desc-destaque">Um convite para sentir, perceber e trazer luz<br>para a sua relação com a sua mãe.</p>
+
+    <p class="tempo-estimado" style="margin-top:16px">Cerca de 5 minutos. No seu tempo. Sem pressa.</p>
+
+    <div style="margin-top:40px;text-align:center">
+      <button type="button" class="btn-dourado" onclick="iniciarPerguntas()">Quero começar</button>
+    </div>
+
+    <p class="micro">Gratuito. Sem julgamento. Sem diagnóstico.</p>
+
+  </div>
+</section>
+
+<!-- TELA 2: PERGUNTAS -->
+<section id="tela-perguntas">
+  <div class="perguntas-inner">
+
+    <div class="progresso-wrap">
+      <div class="progresso-label">
+        <span id="prog-texto">Pergunta 1 de 10</span>
+        <span id="prog-pct">10%</span>
+      </div>
+      <div class="progresso-bar"><div class="progresso-fill" id="prog-fill" style="width:10%"></div></div>
+    </div>
+
+    <!-- P1 -->
+    <div class="pergunta-card ativa" data-index="0">
+      <img class="foto-pergunta" src="assets/photos/p5.jpg" alt=""/>
+      <p class="num-pergunta">Pergunta 1</p>
+      <h2 class="pergunta-texto">Quando você pensa na sua mãe,<br>o que chega para você?</h2>
+      <textarea class="resposta-aberta" placeholder="Escreva o que vier…" oninput="registrarResposta(this)"></textarea>
+      <div class="audio-wrap"><button class="btn-audio" onclick="toggleAudio(this,0)" type="button" title="Gravar áudio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 1 3 3v8a3 3 0 0 1-6 0V4a3 3 0 0 1 3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></button><p class="audio-hint">Ou se preferir, grave um áudio</p></div>
+      <div style="text-align:center;margin-top:40px"><div style="display:inline-flex;align-items:center;justify-content:center;width:100px;height:100px;border-radius:50%;background:#F2EFE3"><img src="assets/coracao.png" alt="" style="height:68px;object-fit:contain"/></div></div>
+    </div>
+
+    <!-- P2 -->
+    <div class="pergunta-card card-creme" data-index="1">
+      <img class="foto-pergunta" src="assets/photos/p2.jpg" alt=""/>
+      <p class="num-pergunta">Pergunta 2</p>
+      <h2 class="pergunta-texto">Existe algo nela que você ainda<br>não consegue aceitar?</h2>
+      <textarea class="resposta-aberta" placeholder="Escreva o que vier…" oninput="registrarResposta(this)"></textarea>
+      <div class="audio-wrap"><button class="btn-audio" onclick="toggleAudio(this,1)" type="button" title="Gravar áudio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 1 3 3v8a3 3 0 0 1-6 0V4a3 3 0 0 1 3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></button><p class="audio-hint">Ou se preferir, grave um áudio</p></div>
+      <div style="text-align:center;margin-top:40px"><img src="assets/coracao.png" alt="" style="height:72px;object-fit:contain"/></div>
+    </div>
+
+    <!-- P3 -->
+    <div class="pergunta-card" data-index="2">
+      <img class="foto-pergunta" src="assets/photos/p3.jpg" alt=""/>
+      <p class="num-pergunta">Pergunta 3</p>
+      <h2 class="pergunta-texto">Você percebe padrões na sua vida que se repetem — nos relacionamentos, no trabalho, em como você se cuida?</h2>
+      <textarea class="resposta-aberta" placeholder="Escreva o que vier…" oninput="registrarResposta(this)"></textarea>
+      <div class="audio-wrap"><button class="btn-audio" onclick="toggleAudio(this,2)" type="button" title="Gravar áudio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 1 3 3v8a3 3 0 0 1-6 0V4a3 3 0 0 1 3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></button><p class="audio-hint">Ou se preferir, grave um áudio</p></div>
+    </div>
+
+    <!-- P4 -->
+    <div class="pergunta-card card-creme" data-index="3">
+      <img class="foto-pergunta" src="assets/photos/p4.jpg" alt=""/>
+      <p class="num-pergunta">Pergunta 4</p>
+      <h2 class="pergunta-texto">Quando algo bom chega para você, o que acontece internamente?</h2>
+      <textarea class="resposta-aberta" placeholder="Escreva o que vier…" oninput="registrarResposta(this)"></textarea>
+      <div class="audio-wrap"><button class="btn-audio" onclick="toggleAudio(this,3)" type="button" title="Gravar áudio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 1 3 3v8a3 3 0 0 1-6 0V4a3 3 0 0 1 3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></button><p class="audio-hint">Ou se preferir, grave um áudio</p></div>
+      <div style="text-align:center;margin-top:40px"><img src="assets/coracao.png" alt="" style="height:72px;object-fit:contain"/></div>
+    </div>
+
+    <!-- P5 -->
+    <div class="pergunta-card" data-index="4">
+      <img class="foto-pergunta" src="assets/photos/p5b.jpg" alt=""/>
+      <p class="num-pergunta">Pergunta 5</p>
+      <h2 class="pergunta-texto">Você sente que carrega algo que não é seu?</h2>
+      <textarea class="resposta-aberta" placeholder="Escreva o que vier…" oninput="registrarResposta(this)"></textarea>
+      <div class="audio-wrap"><button class="btn-audio" onclick="toggleAudio(this,4)" type="button" title="Gravar áudio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 1 3 3v8a3 3 0 0 1-6 0V4a3 3 0 0 1 3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></button><p class="audio-hint">Ou se preferir, grave um áudio</p></div>
+      <div style="text-align:center;margin-top:40px"><div style="display:inline-flex;align-items:center;justify-content:center;width:100px;height:100px;border-radius:50%;background:#F2EFE3"><img src="assets/coracao.png" alt="" style="height:68px;object-fit:contain"/></div></div>
+    </div>
+
+    <!-- P6 -->
+    <div class="pergunta-card card-creme" data-index="5">
+      <img class="foto-pergunta" src="assets/photos/p6.jpg" alt=""/>
+      <p class="num-pergunta">Pergunta 6</p>
+      <h2 class="pergunta-texto">Como é a sua relação com receber amor, cuidado ou atenção das pessoas?</h2>
+      <textarea class="resposta-aberta" placeholder="Escreva o que vier…" oninput="registrarResposta(this)"></textarea>
+      <div class="audio-wrap"><button class="btn-audio" onclick="toggleAudio(this,5)" type="button" title="Gravar áudio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 1 3 3v8a3 3 0 0 1-6 0V4a3 3 0 0 1 3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></button><p class="audio-hint">Ou se preferir, grave um áudio</p></div>
+      <div style="text-align:center;margin-top:40px"><img src="assets/coracao.png" alt="" style="height:72px;object-fit:contain"/></div>
+    </div>
+
+    <!-- P7 -->
+    <div class="pergunta-card" data-index="6">
+      <img class="foto-pergunta" src="assets/photos/p7.jpg" alt=""/>
+      <p class="num-pergunta">Pergunta 7</p>
+      <h2 class="pergunta-texto">Você sente que ocupa o seu lugar — na família, nas relações, na vida?</h2>
+      <textarea class="resposta-aberta" placeholder="Escreva o que vier…" oninput="registrarResposta(this)"></textarea>
+      <div class="audio-wrap"><button class="btn-audio" onclick="toggleAudio(this,6)" type="button" title="Gravar áudio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 1 3 3v8a3 3 0 0 1-6 0V4a3 3 0 0 1 3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></button><p class="audio-hint">Ou se preferir, grave um áudio</p></div>
+      <div style="text-align:center;margin-top:40px"><div style="display:inline-flex;align-items:center;justify-content:center;width:100px;height:100px;border-radius:50%;background:#F2EFE3"><img src="assets/coracao.png" alt="" style="height:68px;object-fit:contain"/></div></div>
+    </div>
+
+    <!-- P8 -->
+    <div class="pergunta-card card-creme" data-index="7">
+      <img class="foto-pergunta" src="assets/photos/p8.jpg" alt=""/>
+      <p class="num-pergunta">Pergunta 8</p>
+      <h2 class="pergunta-texto">O que você sente quando imagina se aproximar emocionalmente da sua mãe — ou da memória que tem dela?</h2>
+      <textarea class="resposta-aberta" placeholder="Escreva o que vier…" oninput="registrarResposta(this)"></textarea>
+      <div class="audio-wrap"><button class="btn-audio" onclick="toggleAudio(this,7)" type="button" title="Gravar áudio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 1 3 3v8a3 3 0 0 1-6 0V4a3 3 0 0 1 3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></button><p class="audio-hint">Ou se preferir, grave um áudio</p></div>
+      <div style="text-align:center;margin-top:40px"><img src="assets/coracao.png" alt="" style="height:72px;object-fit:contain"/></div>
+    </div>
+
+    <!-- P9 -->
+    <div class="pergunta-card" data-index="8">
+      <img class="foto-pergunta" src="assets/photos/p9.jpg" alt=""/>
+      <p class="num-pergunta">Pergunta 9</p>
+      <h2 class="pergunta-texto">Existe algo que você gostaria que tivesse sido diferente na sua infância ou na relação com ela?</h2>
+      <textarea class="resposta-aberta" placeholder="Escreva o que vier…" oninput="registrarResposta(this)"></textarea>
+      <div class="audio-wrap"><button class="btn-audio" onclick="toggleAudio(this,8)" type="button" title="Gravar áudio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 1 3 3v8a3 3 0 0 1-6 0V4a3 3 0 0 1 3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></button><p class="audio-hint">Ou se preferir, grave um áudio</p></div>
+      <div style="text-align:center;margin-top:40px"><div style="display:inline-flex;align-items:center;justify-content:center;width:100px;height:100px;border-radius:50%;background:#F2EFE3"><img src="assets/coracao.png" alt="" style="height:68px;object-fit:contain"/></div></div>
+    </div>
+
+    <!-- P10 -->
+    <div class="pergunta-card card-creme" data-index="9">
+      <img class="foto-pergunta" src="assets/photos/p10.jpg" alt=""/>
+      <p class="num-pergunta">Pergunta 10</p>
+      <h2 class="pergunta-texto">Como você se sente agora, depois dessas perguntas?</h2>
+      <textarea class="resposta-aberta" placeholder="Escreva o que vier…" oninput="registrarResposta(this)"></textarea>
+      <div class="audio-wrap"><button class="btn-audio" onclick="toggleAudio(this,9)" type="button" title="Gravar áudio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 1 3 3v8a3 3 0 0 1-6 0V4a3 3 0 0 1 3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></button><p class="audio-hint">Ou se preferir, grave um áudio</p></div>
+      <div style="text-align:center;margin-top:40px"><img src="assets/coracao.png" alt="" style="height:72px;object-fit:contain"/></div>
+    </div>
+
+    <div class="nav-perguntas">
+      <button class="btn-nav" id="btn-voltar" onclick="voltarPergunta()" style="display:none">← Voltar</button>
+      <button class="btn-avancar" id="btn-avancar" onclick="avancarPergunta()">Próximo →</button>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- TELA 3: RESULTADO -->
+<section id="tela-resultado" style="background:var(--palha)">
+  <!-- faixa creme de boas-vindas -->
+  <div style="background:var(--palha);padding:60px 24px 0">
+    <div class="resultado-inner">
+      <h2>Você se permitiu olhar.</h2>
+      <div class="divisor"></div>
+      <p class="reflexao" id="reflexao-texto">
+        Trazer luz para o inconsciente já é um movimento sistêmico.
+      </p>
+      <p class="convite">
+        Se você percebeu aqui que existe algo para olhar — na relação com a sua mãe, nos padrões que se repetem, no que você carrega — o Diagnóstico Sistêmico é o próximo passo. Lá você entende o que está acontecendo e o que fazer.
+      </p>
+    </div>
+  </div>
+
+  <!-- faixa verde escura com o card -->
+  <div style="background:var(--verde);padding:48px 24px 56px">
+    <div style="max-width:620px;margin:0 auto">
+
+      <div class="card-diagnostico" style="background:rgba(255,255,255,.05);border:1px solid rgba(212,160,23,.25);margin-bottom:0">
+        <h3>Diagnóstico Sistêmico</h3>
+        <div class="card-item">
+          <span class="check">✦</span>
+          <p>Cícero lê suas respostas no Diagnóstico com profundidade — não é IA, não é estagiário</p>
+        </div>
+        <div class="card-item">
+          <span class="check">✦</span>
+          <p>Você entende o que se repete na sua vida e o que seu sistema familiar está comunicando</p>
+        </div>
+        <div class="card-item">
+          <span class="check">✦</span>
+          <p>Se sua questão com a mãe for leve, já está incluído um exercício sistêmico guiado para auxiliar o processo</p>
+        </div>
+        <div class="card-item">
+          <span class="check">✦</span>
+          <p>Caso precise de algo mais, indicamos o próximo passo — minicurso ou Constelação Sistêmica Online</p>
+        </div>
+        <div class="preco-box">
+          <div style="font-size:13px;color:rgba(242,239,227,.4);text-decoration:line-through;margin-bottom:4px;letter-spacing:.02em">De R$ 149</div>
+          <div class="por">R$ 97</div>
+          <div class="desc-preco">oferta especial · entrega em até 48h</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- faixa creme: quem sou eu -->
+  <div style="background:var(--palha);padding:56px 24px 0">
+    <div style="max-width:620px;margin:0 auto">
+      <p style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--dourado);font-family:var(--sans);margin-bottom:10px">Quem sou eu</p>
+      <div style="display:flex;gap:32px;align-items:flex-start;text-align:left">
+        <img src="assets/cicero-perfil.jpg" alt="Cícero Junqueira" style="width:120px;height:150px;object-fit:cover;object-position:top;border-radius:3px;flex-shrink:0;border:2px solid var(--dourado)"/>
+        <div>
+          <h3 style="font-family:var(--serif);font-size:26px;font-weight:400;color:var(--verde);margin-bottom:14px">Cícero Junqueira</h3>
+          <p style="font-size:14px;color:var(--fg2);line-height:1.8;margin-bottom:12px">Comecei como educador. A partir de 2001 trabalhei com crianças e jovens em escolas de Belo Horizonte e região — como professor de Educação Física, Capoeira, Xadrez e Projeto de Vida, do maternal ao ensino médio.</p>
+          <p style="font-size:14px;color:var(--fg2);line-height:1.8;margin-bottom:12px">Foi nesse percurso que percebi o que os conteúdos curriculares não conseguiam alcançar: <strong>os padrões invisíveis que cada pessoa carregava de casa.</strong></p>
+          <p style="font-size:14px;color:var(--fg2);line-height:1.8;margin-bottom:12px">Sou graduado em Educação Física, Pedagogia, Educação Especial e cursando Ciências da Religião. Pós-graduado em Gestão de Equipes e Liderança, Ensino Religioso, Docência do Ensino Superior, Educação Física Escolar, Docência e Prática da Meditação, Psicopedagogia e Inteligência Emocional — e em conclusão de Neurociências.</p>
+          <p style="font-size:14px;color:var(--fg2);line-height:1.8;margin-bottom:12px">A Constelação Familiar chegou na minha vida em 2018 — ao mesmo tempo uma descoberta e um reencontro. Sou formado pelo <strong>IDESV</strong> — referência nacional na abordagem de Bert Hellinger — com formações em Constelação Familiar, Pedagogia Sistêmica e Desenho Sistêmico.</p>
+          <p style="font-size:14px;color:var(--fg2);line-height:1.8">Hoje trabalho <strong>Constelação Sistêmica, conhecimentos humanos e transcendência</strong> como pilares do processo de transformação pessoal e nas vivências que facilito.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- faixa verde: depoimentos -->
+  <div style="background:var(--verde);padding:56px 24px;margin-top:56px">
+    <div style="max-width:620px;margin:0 auto;text-align:center">
+      <h3 style="font-family:var(--serif);font-size:clamp(26px,4vw,36px);color:var(--palha);font-weight:400;margin-bottom:12px;line-height:1.2">O que dizem quem<br>já vivenciou</h3>
+      <div style="width:40px;height:1px;background:var(--dourado);margin:0 auto 40px"></div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;text-align:left">
+
+        <!-- Juliana -->
+        <div style="background:rgba(255,255,255,.06);border:1px solid rgba(212,160,23,.2);border-radius:4px;padding:24px">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+            <img src="assets/juliana.jpg" style="width:44px;height:44px;border-radius:50%;flex-shrink:0;object-fit:cover;object-position:top"/>
+            <div>
+              <p style="font-size:14px;font-weight:600;color:var(--palha);font-family:var(--sans)">Juliana S.</p>
+              <p style="font-size:12px;color:var(--dourado-suave)">@juju.jsilwa</p>
+            </div>
+          </div>
+          <p style="font-size:13px;color:rgba(242,239,227,.8);line-height:1.75;font-style:italic">"A Constelação Familiar foi uma experiência profunda e surpreendente. Acabei curando feridas emocionais antigas — geracionais — que nem eu sabia que existiam. Você trabalhou com firmeza e disciplina, mas também com carinho, respeito, paciência e amor. Gratidão pela sua clareza, precisão e atenção."</p>
+        </div>
+
+        <!-- Ana -->
+        <div style="background:rgba(255,255,255,.06);border:1px solid rgba(212,160,23,.2);border-radius:4px;padding:24px">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+            <img src="assets/anad.jpg" style="width:44px;height:44px;border-radius:50%;flex-shrink:0;object-fit:cover;object-position:top"/>
+            <div>
+              <p style="font-size:14px;font-weight:600;color:var(--palha);font-family:var(--sans)">Ana D.</p>
+              <p style="font-size:12px;color:var(--dourado-suave)">@anadietzebolos</p>
+            </div>
+          </div>
+          <p style="font-size:13px;color:rgba(242,239,227,.8);line-height:1.75;font-style:italic">"Sempre tive pra mim que a constelação deve ser feita com profissionais sérios e éticos. O Cícero conduz tudo com muita seriedade, caráter e acolhimento. Pude resolver questões que há anos carregava comigo. Foi uma tarde deliciosa. Já indiquei para algumas amigas."</p>
+        </div>
+
+        <!-- Renata -->
+        <div style="background:rgba(255,255,255,.06);border:1px solid rgba(212,160,23,.2);border-radius:4px;padding:24px">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+            <div style="width:44px;height:44px;border-radius:50%;background:rgba(212,160,23,.3);overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:20px;color:var(--dourado);font-weight:600">R</div>
+            <div>
+              <p style="font-size:14px;font-weight:600;color:var(--palha);font-family:var(--sans)">Renata Gomes</p>
+              <p style="font-size:12px;color:var(--dourado-suave)">· BH</p>
+            </div>
+          </div>
+          <p style="font-size:13px;color:rgba(242,239,227,.8);line-height:1.75;font-style:italic">"Parabéns Cícero! Pelo seu lindo trabalho! Você fala muito bem e é muito esclarecedor. Agradeço muito pela ajuda, carinho e resiliência! Que Deus abençoe sua vida infinitamente por um trabalho tão bonito e caridoso!!!!"</p>
+        </div>
+
+        <!-- Elma -->
+        <div style="background:rgba(255,255,255,.06);border:1px solid rgba(212,160,23,.2);border-radius:4px;padding:24px">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+            <img src="assets/elma.jpg" style="width:44px;height:44px;border-radius:50%;flex-shrink:0;object-fit:cover;object-position:top"/>
+            <div>
+              <p style="font-size:14px;font-weight:600;color:var(--palha);font-family:var(--sans)">Elma R.</p>
+              <p style="font-size:12px;color:var(--dourado-suave)">@elma_rocha</p>
+            </div>
+          </div>
+          <p style="font-size:13px;color:rgba(242,239,227,.8);line-height:1.75;font-style:italic">"Há algum tempo eu constelei com você. Me dei conta de que os episódios 'depressivos' sem qualquer motivo de fundo simplesmente desapareceram. Faço o exercício de incluir e digo: 'vejo a pessoa e vejo a dor'. Muitíssimo obrigada, de coração."</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- faixa creme: método + FAQ -->
+  <div style="background:var(--palha);padding:56px 24px 0">
+    <div style="max-width:560px;margin:0 auto;text-align:center">
+
+      <!-- método: o caminho -->
+      <p style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--dourado);font-family:var(--sans);margin-bottom:32px">O caminho</p>
+
+      <div style="display:flex;flex-direction:column;gap:0;margin-bottom:56px;text-align:left">
+
+        <!-- passo 1 -->
+        <div style="display:flex;gap:20px;padding:20px 0;border-top:1px solid #d4cfc0">
+          <div style="flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--dourado);color:var(--verde);font-family:var(--sans);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;margin-top:2px">1</div>
+          <div>
+            <p style="font-family:var(--serif);font-size:18px;color:var(--verde);margin-bottom:6px;font-weight:600">Espelho Emocional <span style="font-size:13px;font-family:var(--sans);font-weight:400;color:var(--fg3)">(você está aqui)</span></p>
+            <p style="font-size:14px;color:var(--fg2);line-height:1.8">Você percebe como esse tema está presente dentro de você. Às vezes, essa percepção já traz clareza suficiente — e tudo bem. Nem sempre há algo a resolver.</p>
+          </div>
+        </div>
+
+        <!-- seta -->
+        <div style="padding-left:48px;color:var(--dourado);font-size:18px;line-height:1">↓</div>
+
+        <!-- passo 2 -->
+        <div style="display:flex;gap:20px;padding:20px 0;border-top:1px solid #d4cfc0">
+          <div style="flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--dourado);color:var(--verde);font-family:var(--sans);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;margin-top:2px">2</div>
+          <div>
+            <p style="font-family:var(--serif);font-size:18px;color:var(--verde);margin-bottom:6px;font-weight:600">Diagnóstico Sistêmico</p>
+            <p style="font-size:14px;color:var(--fg2);line-height:1.8">Se percebeu que há algo para olhar, o Diagnóstico Sistêmico investiga as possíveis causas. Quando a questão é leve, o próprio diagnóstico já inclui um exercício sistêmico — e isso pode ser suficiente.</p>
+          </div>
+        </div>
+
+        <!-- seta -->
+        <div style="padding-left:48px;color:var(--dourado);font-size:18px;line-height:1">↓</div>
+
+        <!-- passo 3 -->
+        <div style="display:flex;gap:20px;padding:20px 0;border-top:1px solid #d4cfc0">
+          <div style="flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--dourado);color:var(--verde);font-family:var(--sans);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;margin-top:2px">3</div>
+          <div>
+            <p style="font-family:var(--serif);font-size:18px;color:var(--verde);margin-bottom:6px;font-weight:600">Minicurso Sistêmico <span style="font-size:12px;font-family:var(--sans);font-weight:400;color:var(--dourado);letter-spacing:.05em">EM BREVE</span></p>
+            <p style="font-size:14px;color:var(--fg2);line-height:1.8">Se o diagnóstico indicar que há mais a trabalhar, o Minicurso reúne exercícios sistêmicos, meditações e práticas de autoconstelação para aprofundar o processo por conta própria.</p>
+          </div>
+        </div>
+
+        <!-- seta -->
+        <div style="padding-left:48px;color:var(--dourado);font-size:18px;line-height:1">↓</div>
+
+        <!-- passo 4 -->
+        <div style="display:flex;gap:20px;padding:20px 0;border-top:1px solid #d4cfc0;border-bottom:1px solid #d4cfc0">
+          <div style="flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--dourado);color:var(--verde);font-family:var(--sans);font-weight:700;font-size:12px;display:flex;align-items:center;justify-content:center;margin-top:2px">4</div>
+          <div>
+            <p style="font-family:var(--serif);font-size:18px;color:var(--verde);margin-bottom:6px;font-weight:600">Constelação Sistêmica</p>
+            <p style="font-size:14px;color:var(--fg2);line-height:1.8">Quando a dor é persistente, o conflito recorrente ou a dificuldade exige um olhar individualizado, a Constelação oferece um espaço conduzido para que algo mais profundo possa se mover.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- FAQ -->
+      <p style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--dourado);font-family:var(--sans);margin-bottom:24px">Perguntas frequentes</p>
+      <div style="text-align:left" id="faq">
+
+        <details style="border-top:1px solid #d4cfc0;padding:18px 0">
+          <summary style="font-family:var(--serif);font-size:17px;color:var(--verde);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">O Espelho Emocional é um diagnóstico? <span style="color:var(--dourado);font-size:20px;font-weight:300">+</span></summary>
+          <p style="font-size:14px;color:var(--fg2);line-height:1.8;margin-top:14px">Não. O Espelho Emocional é uma experiência de autoobservação e reflexão. Seu objetivo é ajudar você a perceber como estão suas emoções, sentimentos e percepções em relação às experiências vividas com sua mãe.</p>
+        </details>
+
+        <details style="border-top:1px solid #d4cfc0;padding:18px 0">
+          <summary style="font-family:var(--serif);font-size:17px;color:var(--verde);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">O que acontece no Diagnóstico Sistêmico? <span style="color:var(--dourado);font-size:20px;font-weight:300">+</span></summary>
+          <p style="font-size:14px;color:var(--fg2);line-height:1.8;margin-top:14px">É uma leitura aprofundada das informações que você compartilha. São analisadas respostas, dinâmicas familiares, possíveis repetições entre gerações, desenhos sistêmicos e exercícios com fotografias para identificar possíveis causas das dores, limitações e dificuldades percebidas.</p>
+        </details>
+
+        <details style="border-top:1px solid #d4cfc0;padding:18px 0">
+          <summary style="font-family:var(--serif);font-size:17px;color:var(--verde);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">O Diagnóstico Sistêmico pode ser suficiente? <span style="color:var(--dourado);font-size:20px;font-weight:300">+</span></summary>
+          <p style="font-size:14px;color:var(--fg2);line-height:1.8;margin-top:14px">Sim. Dependendo do que for identificado, o próprio diagnóstico pode trazer clareza suficiente para o momento. Quando a questão é considerada leve, já é incluído um exercício sistêmico que pode auxiliar no processo.</p>
+        </details>
+
+        <details style="border-top:1px solid #d4cfc0;padding:18px 0">
+          <summary style="font-family:var(--serif);font-size:17px;color:var(--verde);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">Preciso ter contato com minha mãe atualmente? <span style="color:var(--dourado);font-size:20px;font-weight:300">+</span></summary>
+          <p style="font-size:14px;color:var(--fg2);line-height:1.8;margin-top:14px">Não. O trabalho não depende da convivência atual. O que observamos é a experiência emocional e sistêmica que existe dentro de você hoje.</p>
+        </details>
+
+        <details style="border-top:1px solid #d4cfc0;padding:18px 0">
+          <summary style="font-family:var(--serif);font-size:17px;color:var(--verde);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">Como sei se preciso de uma Constelação? <span style="color:var(--dourado);font-size:20px;font-weight:300">+</span></summary>
+          <p style="font-size:14px;color:var(--fg2);line-height:1.8;margin-top:14px">Quando existe uma dor, conflito ou dificuldade que permanece há muito tempo sem encontrar solução. Também pode ser indicada quando você percebe que continua repetindo situações semelhantes mesmo após diversas tentativas de mudança.</p>
+        </details>
+
+        <details style="border-top:1px solid #d4cfc0;padding:18px 0">
+          <summary style="font-family:var(--serif);font-size:17px;color:var(--verde);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">E se eu perceber que esse tema está leve para mim? <span style="color:var(--dourado);font-size:20px;font-weight:300">+</span></summary>
+          <p style="font-size:14px;color:var(--fg2);line-height:1.8;margin-top:14px">Isso também é um resultado válido. O objetivo não é encontrar problemas — é gerar consciência. Se essa área estiver tranquila, talvez outro Pilar Sistêmico faça mais sentido para você neste momento.</p>
+        </details>
+
+        <details style="border-top:1px solid #d4cfc0;border-bottom:1px solid #d4cfc0;padding:18px 0;margin-bottom:48px">
+          <summary style="font-family:var(--serif);font-size:17px;color:var(--verde);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center">O trabalho sistêmico substitui psicoterapia ou acompanhamento médico? <span style="color:var(--dourado);font-size:20px;font-weight:300">+</span></summary>
+          <p style="font-size:14px;color:var(--fg2);line-height:1.8;margin-top:14px">Não. O trabalho sistêmico é complementar. Ele pode caminhar junto com processos terapêuticos, psicológicos, psiquiátricos e médicos, mas não substitui nenhum deles.</p>
+        </details>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- faixa creme com os botões -->
+  <div style="background:var(--palha);padding:48px 24px 64px">
+    <div style="max-width:560px;margin:0 auto">
+
+      <p style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--dourado);font-family:var(--sans);margin-bottom:24px;text-align:center">Próximo passo</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:48px">
+
+        <!-- Conhecer Diagnóstico -->
+        <a href="#" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:28px 16px;height:140px;background:var(--verde);border-radius:6px;text-decoration:none;text-align:center;transition:all 0.25s;border:1px solid transparent" onmouseover="this.style.borderColor='var(--dourado)'" onmouseout="this.style.borderColor='transparent'">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4A017" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          <span style="font-family:var(--sans);font-size:13px;font-weight:500;color:var(--palha);line-height:1.4;letter-spacing:.01em">Conhecer o Diagnóstico Sistêmico</span>
+        </a>
+
+        <!-- Agendar Constelação -->
+        <a href="#" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:28px 16px;height:140px;background:var(--dourado);border-radius:6px;text-decoration:none;text-align:center;transition:all 0.25s;border:1px solid transparent" onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#13271B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          <span style="font-family:var(--sans);font-size:13px;font-weight:600;color:var(--verde);line-height:1.4;letter-spacing:.01em">Agendar Constelação Online</span>
+        </a>
+
+        <!-- Fazer Diagnóstico -->
+        <a href="https://diagnostico-sistemico.pages.dev" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:28px 16px;height:140px;background:var(--dourado);border-radius:6px;text-decoration:none;text-align:center;transition:all 0.25s;border:1px solid transparent" onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#13271B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          <span style="font-family:var(--sans);font-size:13px;font-weight:600;color:var(--verde);line-height:1.4;letter-spacing:.01em">Fazer o Diagnóstico Sistêmico</span>
+        </a>
+
+        <!-- Outros Pilares -->
+        <a href="#" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:28px 16px;height:140px;background:var(--verde);border-radius:6px;text-decoration:none;text-align:center;transition:all 0.25s;border:1px solid transparent" onmouseover="this.style.borderColor='var(--dourado)'" onmouseout="this.style.borderColor='transparent'">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4A017" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <span style="font-family:var(--sans);font-size:13px;font-weight:500;color:var(--palha);line-height:1.4;letter-spacing:.01em">Conhecer os Outros Pilares da Vida</span>
+        </a>
+
+      </div>
+
+      <img src="assets/logo-lockup.png" alt="Cícero Junqueira" style="height:128px;object-fit:contain;margin:0 auto;display:block"/>
+    </div>
+  </div>
+</section>
+
+<script>
+var STORAGE_KEY = 'espelho_respostas';
+var STORAGE_TELA = 'espelho_tela';
+var STORAGE_PERGUNTA = 'espelho_pergunta';
+
+var respostas = new Array(10).fill(null);
+var perguntaAtual = 0;
+var totalPerguntas = 10;
+
+function salvarLocal() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(respostas));
+    localStorage.setItem(STORAGE_PERGUNTA, perguntaAtual);
+    localStorage.setItem(STORAGE_TELA, 'perguntas');
+  } catch(e) {}
+}
+
+function restaurarLocal() {
+  try {
+    var salvas = localStorage.getItem(STORAGE_KEY);
+    var tela = localStorage.getItem(STORAGE_TELA);
+    var perg = localStorage.getItem(STORAGE_PERGUNTA);
+    if (!salvas || tela !== 'perguntas') return;
+    respostas = JSON.parse(salvas);
+    perguntaAtual = parseInt(perg) || 0;
+    document.getElementById('tela-captura').style.display = 'none';
+    document.getElementById('tela-perguntas').style.display = 'block';
+    var cards = document.querySelectorAll('.pergunta-card');
+    cards.forEach(function(c){ c.classList.remove('ativa'); });
+    cards[perguntaAtual].classList.add('ativa');
+    var ta = cards[perguntaAtual].querySelector('.resposta-aberta');
+    if (ta && respostas[perguntaAtual]) ta.value = respostas[perguntaAtual];
+    var btn = document.getElementById('btn-avancar');
+    if (respostas[perguntaAtual]) btn.classList.add('ativo');
+    btn.textContent = perguntaAtual === totalPerguntas - 1 ? 'Ver minha reflexão →' : 'Próximo →';
+    atualizarProgresso();
+  } catch(e) {}
+}
+
+window.addEventListener('load', restaurarLocal);
+
+function iniciarPerguntas() {
+  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(STORAGE_TELA);
+  localStorage.removeItem(STORAGE_PERGUNTA);
+  respostas = new Array(10).fill(null);
+  perguntaAtual = 0;
+  document.getElementById('tela-captura').style.display = 'none';
+  document.getElementById('tela-perguntas').style.display = 'block';
+  atualizarProgresso();
+}
+
+function registrarResposta(textarea) {
+  respostas[perguntaAtual] = textarea.value.trim();
+  salvarLocal();
+  var btn = document.getElementById('btn-avancar');
+  if (respostas[perguntaAtual].length > 0) {
+    btn.classList.add('ativo');
+  } else {
+    btn.classList.remove('ativo');
+  }
+}
+
+function atualizarProgresso() {
+  var pct = Math.round(((perguntaAtual + 1) / totalPerguntas) * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-texto').textContent = 'Pergunta ' + (perguntaAtual + 1) + ' de ' + totalPerguntas;
+  document.getElementById('prog-pct').textContent = pct + '%';
+  document.getElementById('btn-voltar').style.display = perguntaAtual > 0 ? 'block' : 'none';
+  var card = document.querySelectorAll('.pergunta-card')[perguntaAtual];
+  var tela = document.getElementById('tela-perguntas');
+  if (card && card.classList.contains('card-creme')) {
+    tela.style.background = '#F2EFE3';
+    document.getElementById('prog-texto').style.color = 'rgba(19,39,27,.4)';
+    document.getElementById('prog-pct').style.color = 'rgba(19,39,27,.4)';
+    document.getElementById('prog-fill').style.background = 'var(--dourado)';
+  } else {
+    tela.style.background = '#13271B';
+    document.getElementById('prog-texto').style.color = 'rgba(242,239,227,.5)';
+    document.getElementById('prog-pct').style.color = 'rgba(242,239,227,.5)';
+    document.getElementById('prog-fill').style.background = 'var(--dourado)';
+  }
+  var btn = document.getElementById('btn-avancar');
+  btn.textContent = perguntaAtual === totalPerguntas - 1 ? 'Ver minha reflexão →' : 'Próximo →';
+}
+
+function avancarPergunta() {
+  var cards = document.querySelectorAll('.pergunta-card');
+  if (perguntaAtual < totalPerguntas - 1) {
+    cards[perguntaAtual].classList.remove('ativa');
+    perguntaAtual++;
+    cards[perguntaAtual].classList.add('ativa');
+    var ta = cards[perguntaAtual].querySelector('.resposta-aberta');
+    if (ta) ta.value = respostas[perguntaAtual] || '';
+    var btn = document.getElementById('btn-avancar');
+    if (respostas[perguntaAtual] && respostas[perguntaAtual].length > 0) {
+      btn.classList.add('ativo');
+    } else {
+      btn.classList.remove('ativo');
+    }
+    salvarLocal();
+    atualizarProgresso();
+    window.scrollTo(0, 0);
+  } else {
+    mostrarResultado();
+  }
+}
+
+function voltarPergunta() {
+  if (perguntaAtual > 0) {
+    var cards = document.querySelectorAll('.pergunta-card');
+    cards[perguntaAtual].classList.remove('ativa');
+    perguntaAtual--;
+    cards[perguntaAtual].classList.add('ativa');
+    var ta = cards[perguntaAtual].querySelector('.resposta-aberta');
+    if (ta) ta.value = respostas[perguntaAtual] || '';
+    var btn = document.getElementById('btn-avancar');
+    if (respostas[perguntaAtual] && respostas[perguntaAtual].length > 0) {
+      btn.classList.add('ativo');
+    } else {
+      btn.classList.remove('ativo');
+    }
+    atualizarProgresso();
+    window.scrollTo(0, 0);
+  }
+}
+
+function mostrarResultado() {
+  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(STORAGE_TELA);
+  localStorage.removeItem(STORAGE_PERGUNTA);
+  document.getElementById('tela-perguntas').style.display = 'none';
+  document.getElementById('tela-resultado').style.display = 'block';
+  window.scrollTo(0, 0);
+}
+
+var mediaRecorder = null;
+var audioChunks = [];
+
+function toggleAudio(btn, idx) {
+  if (mediaRecorder && mediaRecorder.state === 'recording') {
+    mediaRecorder.stop();
+    return;
+  }
+  if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+    alert('Gravação de áudio não disponível neste navegador ou contexto. Abra o arquivo em um servidor local (http://) para usar esta função.');
+    return;
+  }
+  navigator.mediaDevices.getUserMedia({ audio: true }).then(function(stream) {
+    audioChunks = [];
+    mediaRecorder = new MediaRecorder(stream);
+    mediaRecorder.ondataavailable = function(e) { audioChunks.push(e.data); };
+    mediaRecorder.onstop = function() {
+      stream.getTracks().forEach(function(t){ t.stop(); });
+      respostas[idx] = respostas[idx] || '';
+      respostas[idx] += '[áudio gravado]';
+      salvarLocal();
+      document.getElementById('btn-avancar').classList.add('ativo');
+      btn.classList.remove('gravando');
+    };
+    mediaRecorder.start();
+    btn.classList.add('gravando');
+  }).catch(function() {
+    alert('Não foi possível acessar o microfone. Verifique as permissões do navegador.');
+  });
+}
+</script>
+</body>
+</html>
